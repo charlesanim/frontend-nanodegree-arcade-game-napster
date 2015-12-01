@@ -53,17 +53,10 @@ Enemy.prototype.update = function (dt) {
             player.reset();
         }
     }
-<<<<<<< HEAD
             // If the player goes off the board, reset game
             if (this.x > 750) {
                 this.reset();
             }
-=======
-    // If the enemy goes off the board, reset game
-    if (this.x > 750) {
-        this.reset();
-    }
->>>>>>> origin/master
 };
 
 
@@ -242,14 +235,6 @@ Player.prototype.reset = function () {
     this.gemIdx = undefined;
 };
 
-<<<<<<< HEAD
-=======
-// Update the player's position
-Player.prototype.update = function () {
-    this.x = this.x;
-    this.y = this.y;
-};
->>>>>>> origin/master
 
 // Render the player to the canvas
 Player.prototype.render = function () {
@@ -313,13 +298,9 @@ Gem.prototype.render = function () {
 // Determine the index of a gem in the allGem array
 // based on the color of the gem
 var gemIndex = function (color) {
-<<<<<<< HEAD
 
     switch (color) {
     case 'red':
-=======
-    if (color === 'red') {
->>>>>>> origin/master
         return 0;
         break;
     case 'orange':
