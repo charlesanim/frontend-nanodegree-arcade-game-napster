@@ -1,13 +1,12 @@
 /* Game Class */
-
 // Create a constructor to store the game variables
-var Game = function() {
+var Game = function () {
     this.gameOver = false;
     this.gameWin = false;
 };
 
 // Enemy constructor
-var Enemy = function(x,y) {
+var Enemy = function (x, y) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -25,7 +24,7 @@ var Enemy = function(x,y) {
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
+Enemy.prototype.update = function (dt) {
 
     // Set the position of the enemy based on dt and speed multiplier
     this.x = this.x + 101 * dt * this.multiplier;
@@ -34,7 +33,7 @@ Enemy.prototype.update = function(dt) {
     if (this.y == player.y && (this.x > player.x - 20 && this.x < player.x + 20)) {
 
         // player has encountered an enemy and loses a life
-        player.lives --;
+        player.lives--;
         document.getElementsByClassName('lives')[0].innerHTML = 'Lives: ' + player.lives;
 
         // Check if player has any lives
@@ -42,29 +41,35 @@ Enemy.prototype.update = function(dt) {
             // Player has no lives, hence game over image is shown
             game.gameOver = true;
 
-        }
-        else{
+        } else {
             // Player has lives, check if player is holding a gem
             if (player.hold === true) {
                 // Player is holding a gem, so find out which one and reset it to the original position
-                allGem[player.gemIdx]. reset();
+                allGem[player.gemIdx].reset();
 
-               }
+            }
 
             // Reset the player to original position
-             player.reset();
-           }
+            player.reset();
         }
-           // If the enemy goes off the board, reset game
-           if (this.x > 750) {
+    }
+<<<<<<< HEAD
+            // If the player goes off the board, reset game
+            if (this.x > 750) {
                 this.reset();
-           }
+            }
+=======
+    // If the enemy goes off the board, reset game
+    if (this.x > 750) {
+        this.reset();
+    }
+>>>>>>> origin/master
 };
 
 
 // Reset the enemy to the left of the board with a new y position
 // and a new speed multiplier
-Enemy.prototype.reset = function() {
+Enemy.prototype.reset = function () {
     this.x = -200;
     var yV = [220, 140, 60];
     this.y = yV[Math.floor((Math.random() * 3))];
@@ -73,7 +78,7 @@ Enemy.prototype.reset = function() {
 };
 
 // Render the enemy to the canvas
-Enemy.prototype.render = function() {
+Enemy.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
@@ -86,7 +91,7 @@ Enemy.prototype.render = function() {
  */
 
 // Player constructor
-var Player = function(x,y){
+var Player = function (x, y) {
 
     // Set the player to the boy image
     this.sprite = "images/char-boy.png";
@@ -103,7 +108,7 @@ var Player = function(x,y){
     this.yo = y;
 
     // Set variables related to the gems
-    this.hold = false ; // player not holding gem
+    this.hold = false; // player not holding gem
     this.color = undefined; // color of gem held
 
     // Setting index when player holds a gem in the allGem array
@@ -116,19 +121,24 @@ var Player = function(x,y){
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-Player.prototype.handleInput = function(dir) {
+Player.prototype.handleInput = function (dir) {
 
     // Change the player's position based on the user keyboard input
-    if (dir == 'up') {
-        this.y = this.y - 80;
-    } else if (dir == 'down') {
-        this.y = this.y + 80;
-    } else if (dir == 'left') {
-        this.x = this.x - 101;
-    } else if (dir == 'right') {
-        this.x = this.x + 101;
-    }
 
+    switch (dir){
+    case 'up':
+        this.y = this.y - 80;
+        break;
+    case 'down':
+        this.y = this.y + 80;
+        break;
+    case 'left':
+        this.x = this.x - 101;
+        break;
+    case 'right':
+        this.x = this.x + 101;
+        break;
+    }
     // Check the position of the player
     if (this.x < 0) {
         // Player is off to the left side of the board, move the player
@@ -143,8 +153,8 @@ Player.prototype.handleInput = function(dir) {
     } else if (this.y > 404) {
         // Player is off the bottom of the board
         // Reset player & gem (if the player is holding one)
-        if (player.hold === true) {
-            allGem[player.gemIdx].reset();
+        if (this.hold === true) {
+            allGem[this.gemIdx].reset();
         }
         this.reset();
 
@@ -171,7 +181,7 @@ Player.prototype.handleInput = function(dir) {
             } else {
 
                 // Gem did not match the color, so reset the gem
-                allGem[player.gemIdx].reset();
+                allGem[this.gemIdx].reset();
             }
         }
 
@@ -198,10 +208,10 @@ Player.prototype.handleInput = function(dir) {
         // Player made it to one of the two water blocks
 
         // Check to see if the player is holding a gem
-        if (player.hold === true) {
+        if (this.hold === true) {
             // Player is holding a gem, so find out which gem and
             // reset it to its original position
-            allGem[player.gemIdx].reset();
+            allGem[this.gemIdx].reset();
         }
 
         // Lose a life and reset the player
@@ -218,7 +228,7 @@ Player.prototype.handleInput = function(dir) {
 };
 
 // Reset the player to his original position & image
-Player.prototype.reset = function() {
+Player.prototype.reset = function () {
     // Reset the player to the original position
     this.x = this.xo;
     this.y = this.yo;
@@ -232,14 +242,17 @@ Player.prototype.reset = function() {
     this.gemIdx = undefined;
 };
 
+<<<<<<< HEAD
+=======
 // Update the player's position
-Player.prototype.update = function() {
+Player.prototype.update = function () {
     this.x = this.x;
     this.y = this.y;
 };
+>>>>>>> origin/master
 
 // Render the player to the canvas
-Player.prototype.render = function() {
+Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
@@ -248,7 +261,7 @@ Player.prototype.render = function() {
  */
 
 // Create the Gem constructor
-var Gem = function(color, x, y) {
+var Gem = function (color, x, y) {
 
     // Set the color of the gem
     this.color = color;
@@ -266,7 +279,7 @@ var Gem = function(color, x, y) {
 };
 
 // Reset the gem to its original position
-Gem.prototype.reset = function() {
+Gem.prototype.reset = function () {
     this.x = this.xo;
     this.y = this.yo;
 };
@@ -299,23 +312,34 @@ Gem.prototype.render = function () {
 
 // Determine the index of a gem in the allGem array
 // based on the color of the gem
-var gemIndex = function(color) {
+var gemIndex = function (color) {
+<<<<<<< HEAD
+
+    switch (color) {
+    case 'red':
+=======
     if (color === 'red') {
+>>>>>>> origin/master
         return 0;
-    } else if (color === 'orange') {
+        break;
+    case 'orange':
         return 1;
-    } else if (color === 'green') {
+        break;
+    case 'green':
         return 2;
-    } else if (color === 'blue') {
+        break;
+    case 'blue':
         return 3;
-    } else if (color === 'purple') {
+        break;
+    case 'purple':
         return 4;
+        break;
     }
 };
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function(e) {
+document.addEventListener('keyup', function (e) {
     var allowedKeys = {
         37: 'left',
         38: 'up',
@@ -376,10 +400,10 @@ for (var l = 0; l < xV.length; l++) {
     for (var n = 0; n < yVGem.length; n++) {
         xyLocations.push([xV[l], yVGem[n]]);
 
-        }
+    }
 }
 
-// Create the allKitties array, which will hold all of the
+// Create the allGem array, which will hold all of the
 // gem objects
 var allGem = [];
 
@@ -403,7 +427,13 @@ for (var j = 0; j < 5; j++) {
 }
 
 // Set up the winning positions of the gem
-var winPositions = [[101, 35], [202, 35], [303, 35], [404, 35], [505, 35]];
+var winPositions = [
+    [101, 35],
+    [202, 35],
+    [303, 35],
+    [404, 35],
+    [505, 35]
+];
 
 // -- Instantiate the game --
 var game = new Game();
